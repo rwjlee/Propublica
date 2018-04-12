@@ -24,7 +24,7 @@ class Member(Base):
     def parse_json(self, json_data):
 
         results = json_data['results'][0]
-        self.url = results['member_id']
+        self.url = API_BASE + "members/{}.json".format(results['member_id'])
         self.last_name = results['last_name']
         self.first_name = results['first_name']
         self.current_party = results['current_party']
@@ -34,6 +34,8 @@ class Member(Base):
         self.most_recent_role = current_role['chamber']
         self.end_date = current_role['end_date']
         self.state = current_role['state']
+
+    "https://api.propublica.org/congress/v1/members/C001095.json"
 
 class Congress(Base):
     __tablename__ = 'congresses'
@@ -49,7 +51,7 @@ class Congress(Base):
     def parse_json(self, json_data):
         results = json_data['results'][0]
         self.congress = results['congress']
-        self.chamber = results['chamber']
+        self.chamber = results['chamber'].lower()
         self.url = API_BASE + "{}/{}/members.json".format(self.congress, self.chamber)
 
         member_list=[m['id'] for m in results['members']]
@@ -71,7 +73,7 @@ class Committee(Base):
         results = json_data['results'][0]
         self.name = results['name']
         self.chair = results['chair']
-        self.chamber = results['chamber']
+        self.chamber = results['chamber'].lower()
         self.congress = results['congress']
         self.url = API_BASE + "{}/{}/committees/{}.json".format(self.congress, self.chamber, results['id'])
 
@@ -92,7 +94,7 @@ class SubCommittee(Base):
         results = json_data['results'][0]
         self.name = results['name']
         self.chair = results['chair']
-        self.chamber = results['chamber']
+        self.chamber = results['chamber'].lower()
         self.congress = results['congress']
         self.committee_id = results['committee_id']
         self.url = API_BASE + "{}/{}/committees/{}/subcommittees/{}.json".format(self.congress, self.chamber, self.committee_id, results['id'])

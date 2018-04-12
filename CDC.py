@@ -20,9 +20,13 @@ class CDC():
 
     def get_entity(self, obj, url):
         json_data= self.get_data(url)
+        print(url)
+                
+        pprint(json_data)
+
         entity = obj()
         entity.parse_json(json_data)
-        
+
         results = self.db_Manager.open().query(obj).filter(obj.url == url).all()
         print(results)
         if len(results)==0:
@@ -31,6 +35,7 @@ class CDC():
         else:
             print("should be here")
 
+        print(entity.name)
         return entity
 
     

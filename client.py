@@ -40,16 +40,20 @@ def get_members(chamber, branch):
 # senate=get_senate(115)
 # print(len(senate['results']))
 
-senator_url="https://api.propublica.org/congress/v1/members/C001095.json"
-# senator=get_data(senator_url)
-
-subcommittee_url = "https://api.propublica.org/congress/v1/115/senate/committees/SSAS/subcommittees/SSAS13.json"
-# comittee = get_data(comittee_url)
-
-# pprint(comittee)
-
-
 cdc = CDC()
 
-cdc.get_entity(SubCommittee, subcommittee_url)
+# senator_url="https://api.propublica.org/congress/v1/members/C001095.json"
+# cdc.get_entity(Member, senator_url)
 
+# subcommittee_url = "https://api.propublica.org/congress/v1/115/senate/committees/SSAS/subcommittees/SSAS13.json"
+# cdc.get_entity(SubCommittee, subcommittee_url)
+
+#committee_url = "https://api.propublica.org/congress/v1/115/senate/committees/SSAS.json"
+#cdc.get_entity(Committee, committee_url)
+
+# senate_url = "https://api.propublica.org/congress/v1/115/senate/members.json"
+# cdc.get_entity(Congress, senate_url)
+
+results=cdc.get_data("https://api.propublica.org/congress/v1/115/joint/committees.json")
+
+pprint(results)
